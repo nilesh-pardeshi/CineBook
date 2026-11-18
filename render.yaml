@@ -1,0 +1,29 @@
+# Render Blueprint: creates the PostgreSQL database and the FastAPI service in one go.
+# Dashboard -> New -> Blueprint -> pick this repo. Then set CORS_ORIGINS (see README).
+databases:
+  - name: cinebook-db
+    plan: free
+    databaseName: cinebook
+
+services:
+  - type: web
+    name: cinebook-api
+    runtime: python
+    rootDir: backend
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: sh start.sh
+    healthCheckPath: /api/health
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.12.8
+      - key: DATABASE_URL
+        fromDatabase:
+          name: cinebook-db
+          property: connectionString
+      - key: SECRET_KEY
+        generateValue: true
+      - key: CORS_ORIGINS
+        value: https://YOUR-FRONTEND.vercel.app   # <- change to your real frontend URL
+      - key: APP_TIMEZONE
+        value: Asia/Kolkata
