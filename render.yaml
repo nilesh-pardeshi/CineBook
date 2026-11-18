@@ -24,6 +24,6 @@ services:
       - key: SECRET_KEY
         generateValue: true
       - key: CORS_ORIGINS
-        value: https://YOUR-FRONTEND.vercel.app   # <- change to your real frontend URL
+        value: https://cinebook-rust.vercel.app   # <- change to your real frontend URL
       - key: APP_TIMEZONE
         value: Asia/Kolkata
